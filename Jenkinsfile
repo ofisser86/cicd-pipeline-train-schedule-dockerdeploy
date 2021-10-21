@@ -42,7 +42,7 @@ pipeline {
                 input 'Deploy to Production?'
                 milestone(1)
                     script {
-                        sh "docker pull rework/train-schedule:${env.BUILD_NUMBER}\""
+                        sh "docker pull rework/train-schedule:${env.BUILD_NUMBER}"
                         try {
                             sh "docker stop train-schedule"
                             sh "docker rm train-schedule"
