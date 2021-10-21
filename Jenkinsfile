@@ -51,7 +51,7 @@ pipeline {
                         }
                         sh "docker run --restart always --name train-schedule -p 8080:8080 -d rework/train-schedule:${env.BUILD_NUMBER}"
                     }
-                }
+                
             }
         }
     }
