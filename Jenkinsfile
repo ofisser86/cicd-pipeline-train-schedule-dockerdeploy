@@ -14,7 +14,7 @@ pipeline {
             }
             steps {
                 script {
-                    app = docker.build("rework/train-schedule")
+                    app = docker.build("<DOCKER_HUB_USERNAME>/train-schedule")
                     app.inside {
                         sh 'echo $(curl localhost:8080)'
                     }
@@ -34,25 +34,5 @@ pipeline {
                 }
             }
         }
-        stage('DeployToProduction') {
-            when {
-                branch 'master'
-            }
-            steps {
-                input 'Deploy to Production?'
-                milestone(1)
-                    script {
-                        sh "docker pull rework/train-schedule:${env.BUILD_NUMBER}"
-                        try {
-                            sh "docker stop train-schedule"
-                            sh "docker rm train-schedule"
-                        } catch (err) {
-                            echo: 'caught error: $err'
-                        }
-                        sh "docker run --restart always --name train-schedule -p 8080:8080 -d rework/train-schedule:${env.BUILD_NUMBER}"
-                    }
-                
-            }
-        }
-    }
+    }   
 }
